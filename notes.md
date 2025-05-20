@@ -5,8 +5,9 @@ Current Status: Lecture X - [Topic Name]
 Completed:
 ✅ Lecture 1: Project setup, Next.js, Tailwind, shadcn/ui
 ✅ Lecture 2: MongoDB Atlas, User/Product/Order/Cart models
+✅ Lecture 3: Authentication Setup with NextAuth**
 
-What's Next: [Next lecture topic]
+What's Next: Context API & State Management
 Please continue from where we left off.
 
 ✔

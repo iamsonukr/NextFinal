@@ -24,7 +24,7 @@ async function connectDB() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect('mongodb+srv://thehalloweenlovers:SSUwuiY45dB@3@S@nextcrud.klsxsjc.mongodb.net/?retryWrites=true&w=majority&appName=NextCRUD', opts).then((mongoose) => {
       return mongoose;
     });
   }
@@ -33,7 +33,9 @@ async function connectDB() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
+    console.log(e)
     throw e;
+
   }
 
   return cached.conn;
