@@ -1,26 +1,24 @@
 // src/app/layout.js
-import { Inter } from 'next/font/google'
-import './globals.css'
-import NextAuthSessionProvider from '@/src/contexts/SessionProvider'
-import { getServerSession } from 'next-auth'
-
-const inter = Inter({ subsets: ['latin'] })
+import { ContextProvider } from '@/src/providers/ContextProvider';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import '@/styles/globals.css';
 
 export const metadata = {
-  title: 'E-Commerce App',
-  description: 'Modern e-commerce application built with Next.js',
-}
+  title: 'E-commerce App',
+  description: 'Modern e-commerce application',
+};
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NextAuthSessionProvider session={session}>
+      <body>
+        <ContextProvider session={session}>
           {children}
-        </NextAuthSessionProvider>
+        </ContextProvider>
       </body>
     </html>
-  )
+  );
 }

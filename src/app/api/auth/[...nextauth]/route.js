@@ -5,9 +5,9 @@ import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import { MongoClient } from 'mongodb'
-import connectDB from '@/lib/mongodb'
-import User from '@/models/User'
 import bcrypt from 'bcryptjs'
+import connectDB from '@/src/lib/mongodb'
+import User from '../../../../models/user'
 
 const client = new MongoClient(process.env.MONGODB_URI)
 const clientPromise = client.connect()
