@@ -1,8 +1,8 @@
 // src/app/layout.js
 import { ContextProvider } from '@/src/providers/ContextProvider';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import '@/styles/globals.css';
+import { authOptions } from '@/src/app/api/auth/[...nextauth]/route';
+import './globals.css';
 
 export const metadata = {
   title: 'E-commerce App',

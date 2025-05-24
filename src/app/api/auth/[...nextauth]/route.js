@@ -12,7 +12,7 @@ import User from '../../../../models/user'
 const client = new MongoClient(process.env.MONGODB_URI)
 const clientPromise = client.connect()
 
-const authOptions = {
+export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     CredentialsProvider({
