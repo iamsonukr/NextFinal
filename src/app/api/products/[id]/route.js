@@ -1,9 +1,8 @@
 // src/app/api/productOnes/[id]/route.js
 import { NextResponse } from 'next/server';
-import { connectDB } from '@/src/lib/mongodb';
-
-import review from '@/src/models/review';
+import {review} from '@/src/models/product';
 import product from '@/src/models/product';
+import connectDB from '@/src/lib/mongodb';
 
 export async function GET(request, { params }) {
   try {

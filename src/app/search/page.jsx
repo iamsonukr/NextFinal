@@ -3,11 +3,11 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useProducts } from '@/hooks/useProducts';
-import { SearchBar } from '@/components/products/SearchBar';
-import { FilterSidebar } from '@/components/products/FilterSidebar';
-import { ProductGrid } from '@/components/products/ProductGrid';
-import { Pagination } from '@/components/products/Pagination';
+import { useProducts } from '@/src/hooks/useProducts';
+import { SearchBar } from '@/src/components/products/SearchBar';
+import { FilterSidebar } from '@/src/components/products/FilterSidebar';
+import { ProductGrid } from '@/src/components/products/ProductGrid';
+import { Pagination } from '@/src/components/products/Pagination';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ import Link from 'next/link';
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
+  const [count,setCount]=useState()
 
   const [filters, setFilters] = useState({
     page: 1,
@@ -33,13 +34,13 @@ export default function SearchPage() {
     if (query !== filters.search) {
       setFilters(prev => ({ ...prev, search: query, page: 1 }));
     }
-  }, [query]);
+  }, [count]);
 
   const handleFilterChange = useCallback((newFilters) => {
     const updatedFilters = { ...filters, ...newFilters, page: 1 };
     setFilters(updatedFilters);
     refetch(updatedFilters);
-  }, [filters, refetch]);
+  }, [count, count]);
 
   const handlePageChange = useCallback((page) => {
     const updatedFilters = { ...filters, page };

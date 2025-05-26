@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { connectDB } from '@/src/lib/mongodb';
-import review from '@/src/models/review';
+import {review} from '@/src/models/product';
 import product from '@/src/models/product';
 
 // Get reviews with pagination
