@@ -2,12 +2,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useProduct } from '@/hooks/useProduct';
-import { ProductImageGallery } from '@/components/products/ProductImageGallery';
-import { ProductInfo } from '@/components/products/ProductInfo';
-import { ProductReviews } from '@/components/products/ProductReviews';
-import { RelatedProducts } from '@/components/products/RelatedProducts';
-import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { useProduct } from '@/src/hooks/useProduct';
+import { ProductImageGallery } from '@/src/components/products/ProductImageGallery';
+import { ProductInfo } from '@/src/components/products/ProductInfo';
+import { ProductReviews } from '@/src/components/products/ProductReviews';
+import { RelatedProducts } from '@/src/components/products/RelatedProducts';
+// import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';

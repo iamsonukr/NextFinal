@@ -147,3 +147,4 @@ productSchema.methods.calculateAverageRating = function () {
 };
 
 export default mongoose.models.Product || mongoose.model('Product', productSchema);
+export const review = mongoose.model('Review', reviewSchema);

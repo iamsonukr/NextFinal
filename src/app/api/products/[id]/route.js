@@ -1,37 +1,38 @@
-// src/app/api/products/[id]/route.js
+// src/app/api/productOnes/[id]/route.js
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
-import Product from '@/models/Product';
-import Review from '@/models/Review';
+import { connectDB } from '@/src/lib/mongodb';
+
+import review from '@/src/models/review';
+import product from '@/src/models/product';
 
 export async function GET(request, { params }) {
   try {
-    await connectToDatabase();
+    await connectDB();
     
-    const product = await Product.findById(params.id).lean();
+    const productOne = await product.findById(params.id).lean();
     
-    if (!product) {
+    if (!productOne) {
       return NextResponse.json(
-        { error: 'Product not found' },
+        { error: 'productOne not found' },
         { status: 404 }
       );
     }
 
-    // Get product reviews with user details
-    const reviews = await Review.find({ productId: params.id })
+    // Get productOne reviews with user details
+    const reviews = await review.find({ productOneId: params.id })
       .populate('userId', 'name email image')
       .sort({ createdAt: -1 })
       .limit(10)
       .lean();
 
     // Calculate review statistics
-    const reviewStats = await Review.aggregate([
-      { $match: { productId: params.id } },
+    const reviewStats = await review.aggregate([
+      { $match: { productOneId: params.id } },
       {
         $group: {
           _id: null,
           averageRating: { $avg: '$rating' },
-          totalReviews: { $sum: 1 },
+          totalreviews: { $sum: 1 },
           ratingDistribution: {
             $push: '$rating'
           }
@@ -47,37 +48,37 @@ export async function GET(request, { params }) {
       });
     }
 
-    // Get related products (same category, excluding current product)
-    const relatedProducts = await Product.find({
-      category: product.category,
-      _id: { $ne: product._id },
+    // Get related productOnes (same category, excluding current productOne)
+    const relatedproductOnes = await productOne.find({
+      category: productOne.category,
+      _id: { $ne: productOne._id },
       isActive: true
     })
     .limit(8)
     .lean();
 
-    // Get frequently bought together products
-    const frequentlyBoughtTogether = await Product.find({
-      _id: { $in: product.frequentlyBoughtWith || [] },
+    // Get frequently bought together productOnes
+    const frequentlyBoughtTogether = await productOne.find({
+      _id: { $in: productOne.frequentlyBoughtWith || [] },
       isActive: true
     }).lean();
 
     return NextResponse.json({
-      product: {
-        ...product,
+      productOne: {
+        ...productOne,
         averageRating: reviewStats[0]?.averageRating || 0,
-        totalReviews: reviewStats[0]?.totalReviews || 0,
+        totalreviews: reviewStats[0]?.totalreviews || 0,
         ratingDistribution: ratingCounts
       },
       reviews,
-      relatedProducts,
+      relatedproductOnes,
       frequentlyBoughtTogether
     });
 
   } catch (error) {
-    console.error('Product Detail API Error:', error);
+    console.error('productOne Detail API Error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch product details' },
+      { error: 'Failed to fetch productOne details' },
       { status: 500 }
     );
   }

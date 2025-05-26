@@ -2,16 +2,17 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useProducts } from '@/hooks/useProducts';
-import { SearchBar } from '@/components/products/SearchBar';
-import { FilterSidebar } from '@/components/products/FilterSidebar';
-import { ProductGrid } from '@/components/products/ProductGrid';
-import { Pagination } from '@/components/products/Pagination';
+import { useProducts } from '@/src/hooks/useProducts';
+import { SearchBar } from '@/src/components/products/SearchBar';
+import { FilterSidebar } from '@/src/components/products/FilterSidebar';
+import { ProductGrid } from '@/src/components/products/ProductGrid';
+import { Pagination } from '@/src/components/products/Pagination';
 import { Button } from '@/components/ui/button';
 import { SlidersHorizontal } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export default function ProductsPage() {
+  const [count,setCount]=useState()
   const [filters, setFilters] = useState({
     page: 1,
     limit: 12,
@@ -26,20 +27,24 @@ export default function ProductsPage() {
   const { products, pagination, categories, loading, error, refetch } = useProducts(filters);
 
   const handleFilterChange = useCallback((newFilters) => {
-    const updatedFilters = { ...filters, ...newFilters, page: 1 };
-    setFilters(updatedFilters);
-    refetch(updatedFilters);
-  }, [filters, refetch]);
+    setFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters, ...newFilters, page: 1 };
+      refetch(updatedFilters);
+      return updatedFilters;
+    });
+  }, [count]); 
 
   const handlePageChange = useCallback((page) => {
-    const updatedFilters = { ...filters, page };
-    setFilters(updatedFilters);
-    refetch(updatedFilters);
-  }, [filters, refetch]);
+    setFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters, page };
+      refetch(updatedFilters);
+      return updatedFilters;
+    });
+  }, [count]); // Only depend on refetch, not filters
 
   const handleSearch = useCallback((search) => {
     handleFilterChange({ search });
-  }, [handleFilterChange]);
+  }, [count]);
 
   if (error) {
     return (

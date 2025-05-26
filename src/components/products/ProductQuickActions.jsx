@@ -6,8 +6,8 @@ import { Heart, Scale, Share2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ProductQuickView } from './ProductQuickView';
-import { useWishlist } from '@/hooks/useWishlist';
-import { useProductComparison } from '@/hooks/useProductComparison';
+import { useWishlist } from '@/src/hooks/useWishlist';
+import { useProductComparison } from '@/src/hooks/useProductComparison';
 import { toast } from 'sonner';
 
 export function ProductQuickActions({ product, className = '' }) {

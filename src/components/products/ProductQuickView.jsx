@@ -9,10 +9,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/src/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/src/contexts/CartContext';
 
 export function ProductQuickView({ product, isOpen, onClose }) {
   const { addToCart, isInCart, getItemQuantity } = useCart();

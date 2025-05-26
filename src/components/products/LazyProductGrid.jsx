@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard';
 import { ProductCardSkeleton } from './ProductCardSkeleton';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useIntersectionObserver } from '@/src/hooks/useIntersectionObserver';
 
 export function LazyProductGrid({ products, loading, hasMore, onLoadMore }) {
   const [displayedProducts, setDisplayedProducts] = useState([]);

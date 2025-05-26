@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useDebounce } from '@/hooks/useDebounce';
+import { useDebounce } from '@/src/hooks/useDebounce';
 
 export function SearchBar({ onSearch, initialValue = '' }) {
   const [searchTerm, setSearchTerm] = useState(initialValue);

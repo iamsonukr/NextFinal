@@ -7,6 +7,7 @@ export function useProducts(filters = {}) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [count,setCount]=useState()
 
   const fetchProducts = async (newFilters = {}) => {
     try {
@@ -37,12 +38,12 @@ export function useProducts(filters = {}) {
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+useEffect(() => {
+  fetchProducts();
+}, [count]); // Include filters
 
   const refetch = (newFilters) => {
-    fetchProducts(newFilters);
+    // fetchProducts(newFilters);
   };
 
   return {

@@ -2,14 +2,14 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { connectToDatabase } from '@/lib/mongodb';
-import Review from '@/models/Review';
-import Product from '@/models/Product';
+import { connectDB } from '@/src/lib/mongodb';
+import review from '@/src/models/review';
+import product from '@/src/models/product';
 
 // Get reviews with pagination
 export async function GET(request, { params }) {
   try {
-    await connectToDatabase();
+    await connectDB();
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page')) || 1;
@@ -24,29 +24,29 @@ export async function GET(request, { params }) {
     
     const skip = (page - 1) * limit;
     
-    const reviews = await Review.find(query)
+    const reviews = await review.find(query)
       .populate('userId', 'name email image')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
       .lean();
     
-    const totalReviews = await Review.countDocuments(query);
-    const totalPages = Math.ceil(totalReviews / limit);
+    const totalreviews = await review.countDocuments(query);
+    const totalPages = Math.ceil(totalreviews / limit);
     
     return NextResponse.json({
       reviews,
       pagination: {
         currentPage: page,
         totalPages,
-        totalReviews,
+        totalreviews,
         hasNextPage: page < totalPages,
         hasPrevPage: page > 1
       }
     });
     
   } catch (error) {
-    console.error('Reviews GET Error:', error);
+    console.error('reviews GET Error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch reviews' },
       { status: 500 }
@@ -80,12 +80,12 @@ export async function POST(request, { params }) {
     }
     
     // Check if user already reviewed this product
-    const existingReview = await Review.findOne({
+    const existingreview = await review.findOne({
       productId: params.id,
       userId: session.user.id
     });
     
-    if (existingReview) {
+    if (existingreview) {
       return NextResponse.json(
         { error: 'You have already reviewed this product' },
         { status: 400 }
@@ -93,7 +93,7 @@ export async function POST(request, { params }) {
     }
     
     // Create new review
-    const review = new Review({
+    const review = new review({
       productId: params.id,
       userId: session.user.id,
       rating,
@@ -105,21 +105,21 @@ export async function POST(request, { params }) {
     await review.save();
     
     // Update product rating statistics
-    const reviewStats = await Review.aggregate([
+    const reviewStats = await review.aggregate([
       { $match: { productId: params.id } },
       {
         $group: {
           _id: null,
           averageRating: { $avg: '$rating' },
-          totalReviews: { $sum: 1 }
+          totalreviews: { $sum: 1 }
         }
       }
     ]);
     
     if (reviewStats[0]) {
-      await Product.findByIdAndUpdate(params.id, {
+      await product.findByIdAndUpdate(params.id, {
         rating: reviewStats[0].averageRating,
-        reviewCount: reviewStats[0].totalReviews
+        reviewCount: reviewStats[0].totalreviews
       });
     }
     
@@ -129,7 +129,7 @@ export async function POST(request, { params }) {
     return NextResponse.json(review);
     
   } catch (error) {
-    console.error('Review POST Error:', error);
+    console.error('review POST Error:', error);
     return NextResponse.json(
       { error: 'Failed to create review' },
       { status: 500 }

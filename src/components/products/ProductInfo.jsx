@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
-import { useCart } from '@/contexts/CartContext';
-import { useUser } from '@/contexts/UserContext';
+import { useCart } from '@/src/contexts/CartContext';
+import { useUser } from '@/src/contexts/UserContext';
 import { toast } from 'sonner';
 
 export function ProductInfo({ product }) {

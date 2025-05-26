@@ -1,11 +1,12 @@
 // src/app/api/products/route.js
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
-import Product from '@/models/Product';
+import connectDB from '@/src/lib/mongodb';
+import product from '@/src/models/product';
+
 
 export async function GET(request) {
   try {
-    await connectToDatabase();
+    await connectDB();
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page')) || 1;
@@ -49,18 +50,18 @@ export async function GET(request) {
     sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
 
     // Execute query with pagination
-    const products = await Product.find(query)
+    const products = await product.find(query)
       .sort(sortOptions)
       .skip(skip)
       .limit(limit)
       .lean();
 
     // Get total count for pagination
-    const totalProducts = await Product.countDocuments(query);
+    const totalProducts = await product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / limit);
 
     // Get categories for filter sidebar
-    const categories = await Product.distinct('category', { isActive: true });
+    const categories = await product.distinct('category', { isActive: true });
 
     return NextResponse.json({
       products,

@@ -22,10 +22,11 @@ export function FilterSidebar({
     rating: true
   });
 
-  const [priceRange, setPriceRange] = useState([
+  // Remove local priceRange state - use filters prop directly
+  const priceRange = [
     filters.minPrice || 0,
     filters.maxPrice || 1000
-  ]);
+  ];
 
   const toggleSection = (section) => {
     setOpenSections(prev => ({
@@ -41,7 +42,7 @@ export function FilterSidebar({
   };
 
   const handlePriceChange = (value) => {
-    setPriceRange(value);
+    // Only call onFilterChange, no local state update
     onFilterChange({
       minPrice: value[0],
       maxPrice: value[1]
@@ -53,7 +54,6 @@ export function FilterSidebar({
   };
 
   const clearFilters = () => {
-    setPriceRange([0, 1000]);
     onFilterChange({
       category: 'all',
       minPrice: 0,

@@ -6,8 +6,23 @@ Completed:
 ✅ Lecture 1: Project setup, Next.js, Tailwind, shadcn/ui
 ✅ Lecture 2: MongoDB Atlas, User/Product/Order/Cart models
 ✅ Lecture 3: Authentication Setup with NextAuth**
+**Lecture 4: Context API & State Management**
+**Lecture 5: Basic UI Components & Layout**
+**Lecture 6: Product Catalog & Listing**
 
-What's Next: Context API & State Management
+
+What's Next: **Lecture 7: Product Details & Dynamic Routing**
+- Dynamic product pages ([productId])
+- Image optimization with Next.js Image
+- Product reviews system
+- Related products
+
+**Lecture 8: Shopping Cart Implementation**
+- Cart context and operations
+- Add/remove/update cart items
+- Cart persistence (localStorage + database)
+- Cart drawer/modal
+
 Please continue from where we left off.
 
 ✔

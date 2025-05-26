@@ -6,12 +6,12 @@ import { Star, ThumbsUp, ThumbsDown, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+// import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/src/contexts/UserContext';
 import { toast } from 'sonner';
 
 export function ProductReviews({ productId, initialReviews = [], averageRating = 0, totalReviews = 0, ratingDistribution = {} }) {
@@ -263,12 +263,12 @@ export function ProductReviews({ productId, initialReviews = [], averageRating =
             <Card key={review._id}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <Avatar>
+                  {/* <Avatar>
                     <AvatarImage src={review.userId.image} />
                     <AvatarFallback>
                       {review.userId.name?.charAt(0)?.toUpperCase() || 'U'}
                     </AvatarFallback>
-                  </Avatar>
+                  </Avatar> */}
                   
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
